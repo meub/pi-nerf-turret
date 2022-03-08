@@ -103,10 +103,9 @@ try:
 			screen.addstr(0, 0, 'fire ')
 			print ("Firing")
 			kit.servo[trigger].angle = 100
-			time.sleep(0.3)
+			time.sleep(0.2)
 			kit.servo[trigger].angle = 0
-			
-		print( y_position )
+
 
 finally:
     # shut down cleanly
