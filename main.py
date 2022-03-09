@@ -39,8 +39,8 @@ y_position = 100
 trigger_position = 0
 
 # Limits
-y_max = 160
-y_min = 100
+y_max = 250
+y_min = 50
 trigger_min = 0
 
 # get the curses screen window
@@ -57,14 +57,14 @@ screen.keypad(True)
  
 try:
 	# Reset everything to known good values
-	kit.servo[y_axis].angle = y_min + 30
+	kit.servo[y_axis].angle = 100
 	kit.servo[trigger].angle = trigger_min
 	kit.continuous_servo[x_axis].throttle = 0
 
 	while True:
 		char = screen.getch()
 		if char == ord('q'):
-			kit.servo[y_axis].angle = y_min + 30
+			kit.servo[y_axis].angle = 100
 			kit.servo[trigger].angle = trigger_min
 			kit.continuous_servo[x_axis].throttle = 0
 			break
@@ -105,6 +105,8 @@ try:
 			kit.servo[trigger].angle = 100
 			time.sleep(0.2)
 			kit.servo[trigger].angle = 0
+			
+		print( y_position)
 
 
 finally:
