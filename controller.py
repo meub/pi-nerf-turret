@@ -59,7 +59,13 @@ running = True
 # Set Y to current position
 print(kit.servo[y_axis].angle)
 y_position = kit.servo[y_axis].angle	
-	
+
+# Reset Y Axis
+# 100 should be straight ahead
+#kit.servo[y_axis].angle = 100
+#running = False
+
+
 while running:
 	
 	# Need to have this or else x axis continues after
@@ -82,7 +88,7 @@ while running:
 	while keyboard.is_pressed("down"):
 		y_position=y_position-y_increment_unit
 		if( y_position < y_min ):
-			print("Y is over max")
+			print("Y is under min")
 			y_position=y_position+y_increment_unit
 		else:	
 			kit.servo[y_axis].angle = y_position
