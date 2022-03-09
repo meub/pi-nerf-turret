@@ -54,19 +54,17 @@ def on_key_release(key):
 keyboard.on_release(on_key_release, suppress=False)
 
 # Main Loop
-
-#reset_defaults()
 running = True
 
-print(kit.servo[y_axis].angle)
 # Set Y to current position
-
+print(kit.servo[y_axis].angle)
 y_position = kit.servo[y_axis].angle	
 	
 while running:
 	
-	# Need to have this for some reason
-	time.sleep(0.02)
+	# Need to have this or else x axis continues after
+    # key is released
+	time.sleep(0.01)
 	
 	# Use while statements to prevent key repeat which is 
 	# the desired behavior for controlling servos 
