@@ -22,8 +22,8 @@ y_position = 100
 trigger_position = 0
 
 # Limits
-y_max = 180
-y_min = 50
+y_max = 160
+y_min = 20
 trigger_min = 0
 y_increment_unit = 2 # this determines speed of y axis movement
 
@@ -44,9 +44,7 @@ def reset_defaults():
 # Handle Keyup events separately for x axis control
 # of continuous servos
 def on_key_release(key):
-	print(key.name)
 	if "left" in key.name or "right" in key.name:
-		print("left/right released")
 		# Turn off
 		kit.continuous_servo[x_axis].throttle = 0
 
@@ -79,6 +77,7 @@ while running:
 		y_position=y_position+y_increment_unit
 		if( y_position > y_max ):
 			print("Y is over max")
+			print( y_position )
 			y_position=y_position-y_increment_unit
 		else:	
 			kit.servo[y_axis].angle = y_position
@@ -89,6 +88,7 @@ while running:
 		y_position=y_position-y_increment_unit
 		if( y_position < y_min ):
 			print("Y is under min")
+			print( y_position )
 			y_position=y_position+y_increment_unit
 		else:	
 			kit.servo[y_axis].angle = y_position
@@ -107,13 +107,11 @@ while running:
 		print("SPACE")
 		kit.servo[trigger].angle = 100
 		time.sleep(0.3)
-		# Set back to zero
 		kit.servo[trigger].angle = 0
 
 	while keyboard.is_pressed("q"):
 		print("Quitting...")
-		kit.servo[y_axis].angle = 120
-		#reset_defaults()
+		kit.servo[y_axis].angle = 60
 		running = False
 		break
 
