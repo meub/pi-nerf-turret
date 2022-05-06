@@ -19,13 +19,17 @@ trigger = 14
 
 # Position Variables
 y_position = 100
+x_position = 90
 trigger_position = 0
 
 # Limits
 y_max = 160
 y_min = 20
+x_max = 180
+x_min = 0
 trigger_min = 0
 y_increment_unit = 2 # this determines speed of y axis movement
+x_increment_unit = 5
 
 # Utility Functions
 def activate_trigger( number ):
@@ -43,13 +47,13 @@ def reset_defaults():
 
 # Handle Keyup events separately for x axis control
 # of continuous servos
-def on_key_release(key):
-	if "left" in key.name or "right" in key.name:
-		# Turn off
-		kit.continuous_servo[x_axis].throttle = 0
+#def on_key_release(key):
+#	if "left" in key.name or "right" in key.name:
+#		# Turn off
+#		kit.continuous_servo[x_axis].throttle = 0
 
 # Define the on release event
-keyboard.on_release(on_key_release, suppress=False)
+#keyboard.on_release(on_key_release, suppress=False)
 
 # Main Loop
 running = True
@@ -60,7 +64,7 @@ y_position = kit.servo[y_axis].angle
 
 # Reset Y Axis
 # 100 should be straight ahead
-#kit.servo[y_axis].angle = 100
+kit.servo[y_axis].angle = 100
 #running = False
 
 
@@ -97,12 +101,30 @@ while running:
 
 	while keyboard.is_pressed("left"):
 		#print("LEFT")
-		kit.continuous_servo[x_axis].throttle = -1
+		#kit.continuous_servo[x_axis].throttle = -1
+		x_position=x_position-x_increment_unit
+		if( x_position < x_min ):
+			print("X is under min")
+			print( x_position )
+			x_position=x_position+x_increment_unit
+		else:	
+			kit.servo[x_axis].angle = x_position
+			time.sleep(0.02)
+			print( kit.servo[x_axis].angle )	
 
 	while keyboard.is_pressed("right"):
 		#print("RIGHT")
-		kit.continuous_servo[x_axis].throttle = 1
-
+		#kit.continuous_servo[x_axis].throttle = 1
+		x_position=x_position+x_increment_unit
+		if( x_position > x_max ):
+			print("X is over max")
+			print( x_position )
+			x_position=x_position-x_increment_unit
+		else:	
+			kit.servo[x_axis].angle = x_position
+			time.sleep(0.02)
+			print( kit.servo[x_axis].angle )
+		
 	while keyboard.is_pressed(" "):
 		print("SPACE")
 		kit.servo[trigger].angle = 100
@@ -111,7 +133,7 @@ while running:
 
 	while keyboard.is_pressed("q"):
 		print("Quitting...")
-		kit.servo[y_axis].angle = 60
+		kit.servo[y_axis].angle = 80
 		running = False
 		break
 
